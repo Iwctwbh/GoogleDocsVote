@@ -82,14 +82,12 @@
         return { count: n, last: now };
     }
 
-    // --- 徽章显示（右侧垂直居中），避免 innerHTML，使用 DOM API 构建节点 ---
     function showBadge(count, lastTs) {
         const id = 'gd-vote-badge';
         let el = document.getElementById(id);
         if (!el) {
             el = document.createElement('div');
             el.id = id;
-            // 右侧垂直居中样式
             el.style.position = 'fixed';
             el.style.right = '12px';
             el.style.top = '50%';
@@ -109,7 +107,6 @@
             el.style.lineHeight = '1.2';
             document.body.appendChild(el);
 
-            // 鼠标悬停时轻微展开（可选视觉效果）
             el.addEventListener('mouseenter', () => {
                 el.style.transform = 'translateY(-50%) scale(1.02)';
             });
@@ -117,7 +114,6 @@
                 el.style.transform = 'translateY(-50%) scale(1)';
             });
 
-            // reset on ctrl/cmd + click
             el.addEventListener('click', (ev) => {
                 if (ev.ctrlKey || ev.metaKey) {
                     if (confirm('重置本表单的运行计数？')) {
@@ -134,7 +130,7 @@
     function updateBadgeDisplay(count, lastTs) {
         const el = document.getElementById('gd-vote-badge');
         if (!el) return;
-        // 清空旧内容
+
         while (el.firstChild) el.removeChild(el.firstChild);
 
         const last = lastTs ? (new Date(lastTs)).toLocaleString() : '—';
@@ -192,12 +188,12 @@
             setTimeout(() => {
                 [...document.querySelectorAll('span')].filter(el => el.textContent.includes(json.nextPageCode))[0]?.closest("div[role=button]")?.click();
 
-                [...document.querySelectorAll('span')].filter(el => el.textContent.includes("プライバシーポリシーを確認し、同意しました。"))[0]?.click();
-                [...document.querySelectorAll('span')].filter(el => el.textContent.includes(json.subbmitCode))[0]?.closest("div[role=button]")?.click();
+                // [...document.querySelectorAll('span')].filter(el => el.textContent.includes("プライバシーポリシーを確認し、同意しました。"))[0]?.click();
+                // [...document.querySelectorAll('span')].filter(el => el.textContent.includes(json.subbmitCode))[0]?.closest("div[role=button]")?.click();
 
                 setTimeout(() => {
                     incrementRunCount();
-                    [...document.querySelectorAll('a')].filter(el => el.textContent.includes("另填写一份回复"))[0]?.click();
+                    // [...document.querySelectorAll('a')].filter(el => el.textContent.includes("另填写一份回复"))[0]?.click();
                 }, 3000)
             }, 1000);
         }, 1000);
