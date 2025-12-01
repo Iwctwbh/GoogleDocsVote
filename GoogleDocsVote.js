@@ -172,6 +172,10 @@
         }
     }
 
+    function chance(p = 0.5) {
+        return Math.random() < p;
+    }
+
     onReady(() => {
         showBadge(getCount(), getLastTimestamp());
 
@@ -201,7 +205,7 @@
 
         [...document.querySelectorAll('span')].filter(el => el.textContent.includes(json.questions[document.querySelectorAll("#lpd4pf")[0]?.textContent.match(/\d+/)[0]]))[1]?.closest(".nWQGrd.zwllIb label").click();
         setTimeout(() => {
-            pageRandomSelect();
+            if (chance(0.5)) { pageRandomSelect(); }
             setTimeout(() => {
                 window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
                 setTimeout(() => {
