@@ -18,8 +18,8 @@
         document.addEventListener('DOMContentLoaded', fn, { once: true });
     }
 
-    const FIRST = ['James','John','Robert','Michael','William','David','Richard','Joseph','Thomas','Charles'];
-    const LAST = ['Smith','Johnson','Williams','Brown','Jones','Garcia','Miller','Davis','Rodriguez','Martinez'];
+    const FIRST = ['James', 'John', 'Robert', 'Michael', 'William', 'David', 'Richard', 'Joseph', 'Thomas', 'Charles'];
+    const LAST = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez'];
 
     function randomName() {
         const f = FIRST[Math.floor(Math.random() * FIRST.length)];
@@ -70,7 +70,7 @@
         try {
             const arr = JSON.parse(localStorage.getItem(key) || '[]');
             if (Array.isArray(arr) && arr.length) return arr[arr.length - 1];
-        } catch (e) {}
+        } catch (e) { }
         return null;
     }
 
@@ -156,6 +156,22 @@
         el.appendChild(hint);
     }
 
+    function pageRandomSelect() {
+        var root = document;
+        var radios = Array.from(root.querySelectorAll('[role="radio"]'));
+        var flag = false;
+        for (const r of radios) {
+            if (r.getAttribute('aria-checked') === 'true') {
+                flag = true;
+            }
+        }
+        if (!flag && radios.length > 0) {
+            var randomIndex = Math.floor(Math.random() * radios.length);
+            var chosen = radios[randomIndex];
+            chosen.click();
+        }
+    }
+
     onReady(() => {
         showBadge(getCount(), getLastTimestamp());
 
@@ -167,7 +183,8 @@
         "2": "「御上先生」（TBS系）",
         "3": "松坂桃李「御上先生」（TBS系）",
         "4": "木村文乃「愛の、がっこう。」（フジテレビ系）"
-    }
+    },
+    "randomSelectPages" : [5,6]
 }`);
 
         if (document.querySelectorAll("#lpd4pf")[0]?.textContent.match(/\d+/)[0] == "1") {
@@ -184,17 +201,20 @@
 
         [...document.querySelectorAll('span')].filter(el => el.textContent.includes(json.questions[document.querySelectorAll("#lpd4pf")[0]?.textContent.match(/\d+/)[0]]))[1]?.closest(".nWQGrd.zwllIb label").click();
         setTimeout(() => {
-            window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
+            pageRandomSelect();
             setTimeout(() => {
-                [...document.querySelectorAll('span')].filter(el => el.textContent.includes(json.nextPageCode))[0]?.closest("div[role=button]")?.click();
-
-                // [...document.querySelectorAll('span')].filter(el => el.textContent.includes("プライバシーポリシーを確認し、同意しました。"))[0]?.click();
-                // [...document.querySelectorAll('span')].filter(el => el.textContent.includes(json.subbmitCode))[0]?.closest("div[role=button]")?.click();
-
+                window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
                 setTimeout(() => {
-                    incrementRunCount();
-                    // [...document.querySelectorAll('a')].filter(el => el.textContent.includes("另填写一份回复"))[0]?.click();
-                }, 3000)
+                    [...document.querySelectorAll('span')].filter(el => el.textContent.includes(json.nextPageCode))[0]?.closest("div[role=button]")?.click();
+
+                    // [...document.querySelectorAll('span')].filter(el => el.textContent.includes("プライバシーポリシーを確認し、同意しました。"))[0]?.click();
+                    // [...document.querySelectorAll('span')].filter(el => el.textContent.includes(json.subbmitCode))[0]?.closest("div[role=button]")?.click();
+
+                    setTimeout(() => {
+                        incrementRunCount();
+                        // [...document.querySelectorAll('a')].filter(el => el.textContent.includes("另填写一份回复"))[0]?.click();
+                    }, 3000)
+                }, 1000);
             }, 1000);
         }, 1000);
     });
